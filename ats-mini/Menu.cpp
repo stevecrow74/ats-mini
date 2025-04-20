@@ -20,7 +20,7 @@ int bandIdx = 0;
 // Band limits are expanded to align with the nearest tuning scale mark
 Band band[] =
 {
-  {"VHF",  FM_BAND_TYPE, FM,   6400, 10800, 10390, 1, 0, 0},
+  {"VHF",  FM_BAND_TYPE, FM,   6400, 10800, 10490, 1, 0, 0},
   // All band. LW, MW and SW (from 135kHz to 30MHz)
   {"2200M", MW_BAND_TYPE,  LSB,  135,   137,   136, 0, 4, 0},
   {"LW",    MW_BAND_TYPE,  AM,   137,   283,   252, 1, 0, 0},
@@ -33,13 +33,13 @@ Band band[] =
   {"80M",   SW_BAND_TYPE,  LSB, 3400,  3800,  3500, 1, 4, 0},
   {"75M",   SW_BAND_TYPE,  AM,  3800,  4000,  3950, 1, 4, 0},
   {"SW3",   SW_BAND_TYPE,  AM,  4000,  4700,  4950, 1, 4, 0},
-  {"60B",   SW_BAND_TYPE,  AM,  4700,  5100,  4950, 1, 4, 0},
+  {"60B",   SW_BAND_TYPE,  AM,  4700,  5100,  4750, 1, 4, 0},
   {"60M",   SW_BAND_TYPE,  LSB, 5100,  5450,  5250, 1, 4, 0},
   {"AIR1",  SW_BAND_TYPE,  USB, 5450,  5900,  5450, 0, 4, 0},
   {"49M",   SW_BAND_TYPE,  AM,  5900,  6525,  6000, 1, 4, 0},
-  {"AIR2",  SW_BAND_TYPE,  USB, 6525,  7000,  6000, 0, 4, 0},
+  {"AIR2",  SW_BAND_TYPE,  USB, 6525,  7000,  6600, 0, 4, 0},
   {"40M",   SW_BAND_TYPE,  LSB, 7000,  7200,  7150, 0, 4, 0},
-  {"41B",   SW_BAND_TYPE,  AM,  7200,  7300,  7450, 1, 4, 0},
+  {"41B",   SW_BAND_TYPE,  AM,  7200,  7300,  7250, 1, 4, 0},
   {"SW4",   SW_BAND_TYPE,  AM,  7300,  9400,  7350, 1, 4, 0},
   {"31B",   SW_BAND_TYPE,  AM,  9400, 10000,  9650, 1, 4, 0},
   {"30M",   SW_BAND_TYPE, LSB, 10000, 10200, 10125, 0, 4, 0},
@@ -57,11 +57,10 @@ Band band[] =
   {"SW9",   SW_BAND_TYPE, AM,  19100, 21000, 19950, 1, 4, 0},
   {"15M",   SW_BAND_TYPE, USB, 21000, 21500, 21225, 0, 4, 0},
   {"13B",   SW_BAND_TYPE, AM,  21500, 21900, 21650, 1, 4, 0},
-  {"SW10",  SW_BAND_TYPE, AM,  21900, 21900, 24500, 1, 4, 0},
+  {"SW10",  SW_BAND_TYPE, AM,  21900, 24800, 21950, 1, 4, 0},
   {"12M",   SW_BAND_TYPE, USB, 24800, 25000, 24940, 0, 4, 0},
   {"SW11",  SW_BAND_TYPE, AM,  25000, 25600, 25500, 1, 4, 0},
   {"11B",   SW_BAND_TYPE, AM,  25600, 26100, 25850, 1, 4, 0},
-  {"SW12",  SW_BAND_TYPE, AM,  26100, 26100, 26150, 1, 4, 0},
   {"CB",    SW_BAND_TYPE, AM,  26100, 28000, 27135, 0, 4, 0},
   {"10M",   SW_BAND_TYPE, USB, 28000, 30000, 28500, 0, 4, 0},
 };
