@@ -61,7 +61,7 @@ Band band[] =
   {"SW11",  SW_BAND_TYPE, AM,  25000, 25600, 25500, 1, 4, 0},
   {"11B",   SW_BAND_TYPE, AM,  25600, 26100, 25850, 1, 4, 0},
   {"CB",    SW_BAND_TYPE, AM,  26100, 28000, 27135, 0, 4, 0},
-  {"10M",   SW_BAND_TYPE, USB, 28000, 30000, 28500, 0, 4, 0},
+  {"10M",   SW_BAND_TYPE, USB, 28000, 30000, 28500, 0, 4, 0}
 };
 
 int getTotalBands() { return(ITEM_COUNT(band)); }
