@@ -21,7 +21,7 @@ int bandIdx = 0;
 Band band[] =
 {
   {"VHF",  FM_BAND_TYPE, FM,   6400, 10800, 10490, 1, 0, 0},
-  // All band. LW, MW and SW (from 135kHz to 30MHz)
+  // All band. LW, MW and SW (from 137kHz to 30MHz)
   {"LW",    MW_BAND_TYPE,  AM,   137,   283,   252, 1, 0, 0},
   {"MW1",   MW_BAND_TYPE,  AM,   283,  1800,   810, 3, 4, 0},
   {"160M",  MW_BAND_TYPE,  LSB, 1800,  2000,  1900, 0, 4, 0},
