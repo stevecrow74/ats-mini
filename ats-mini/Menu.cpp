@@ -21,16 +21,16 @@ int bandIdx = 0;
 Band band[] =
 {
   {"VHF",  FM_BAND_TYPE, FM,   6400, 10800, 10490, 1, 0, 0},
-  // All band. LW, MW and SW (from 137kHz to 30MHz)
-  {"LW",    MW_BAND_TYPE,  AM,   137,   283,   252, 1, 0, 0},
+  // All band. LW, MW and SW (from 150kHz to 30MHz)
+  {"LW",    MW_BAND_TYPE,  AM,   150,   283,   252, 1, 0, 0},
   {"MW1",   MW_BAND_TYPE,  AM,   283,  1800,   810, 3, 4, 0},
   {"160M",  MW_BAND_TYPE,  LSB, 1800,  2000,  1900, 0, 4, 0},
   {"SW0",   MW_BAND_TYPE,  LSB, 2000,  2300,  2200, 0, 4, 0},
   {"120M",  MW_BAND_TYPE,  LSB, 2300,  2500,  2400, 0, 4, 0},
   {"SW1",   MW_BAND_TYPE,  LSB, 2500,  3200,  2900, 0, 4, 0},
-  {"90M",   SW_BAND_TYPE,  AM,  3200,  3400,  3300, 1, 4, 0},
+  {"90B",   SW_BAND_TYPE,  AM,  3200,  3400,  3300, 1, 4, 0},
   {"80M",   SW_BAND_TYPE,  LSB, 3400,  3800,  3500, 1, 4, 0},
-  {"75M",   SW_BAND_TYPE,  AM,  3800,  4000,  3950, 1, 4, 0},
+  {"75B",   SW_BAND_TYPE,  AM,  3800,  4000,  3950, 1, 4, 0},
   {"SW2",   SW_BAND_TYPE,  AM,  4000,  4700,  4450, 1, 4, 0},
   {"60B",   SW_BAND_TYPE,  AM,  4700,  5100,  4750, 1, 4, 0},
   {"60M",   SW_BAND_TYPE,  LSB, 5100,  5450,  5250, 1, 4, 0},
