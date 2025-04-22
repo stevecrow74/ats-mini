@@ -10,9 +10,11 @@
 //
 static const NamedFreq namedFrequencies[] =
 {
-  {  1840, "FT8"  }, {  3573, "FT8"  }, {  5357, "FT8"  }, {  7074, "FT8" },
-  {  7165, "SSTV" }, {  7171, "SSTV" }, { 10136, "FT8"  }, { 14074, "FT8" },
-  { 14230, "SSTV" }, { 18100, "FT8"  }, { 21074, "FT8"  }, { 24915, "FT8" },
+  {  1089, "TalkSport"  }, {  2616, "WeFax"  }, {  3050, "Weather"  }, {  3105, "Weather" },
+  {  3413, "Weather" }, {  4608, "WeFax" }, {  5450, "Weather" }, {  5505, "Weather" },
+  {  7878, "WeFax" }, {  8040, "WeFax" }, {  8957, "Weather" }, {  10051, "Weather" },
+  {  7165, "SSTV" }, {  7171, "SSTV" }, { 11083, "WeFax"  }, { 14074, "FT8" },
+  { 14230, "SSTV" }, { 18100, "FT8"  }, { 21074, "FT8"  },   { 24915, "FT8" },
   { 27700, "SSTV" }, { 28074, "FT8"  }, { 28680, "SSTV" },
 };
 
@@ -119,8 +121,8 @@ static bool showRdsTime(const char *rdsTime)
 {
   if(!rdsTime) return(false);
 
-  // The standard RDS time format is ìHH:MMî.
-  // or sometimes more complex like ìDD.MM.YY,HH:MMî.
+  // The standard RDS time format is ‚ÄúHH:MM‚Äù.
+  // or sometimes more complex like ‚ÄúDD.MM.YY,HH:MM‚Äù.
   const char *timeField = strstr(rdsTime, ":");
 
   // If we find a valid time format...
