@@ -17,6 +17,7 @@
 #define MIN_ELAPSED_RSSI_TIME  200  // RSSI check uses IN_ELAPSED_RSSI_TIME * 6 = 1.2s
 #define ELAPSED_COMMAND      10000  // time to turn off the last command controlled by encoder. Time to goes back to the VFO control // G8PTN: Increased time and corrected comment
 #define DEFAULT_VOLUME          35  // change it for your favorite sound volume
+#define DEFAULT_SLEEP            0  // Default sleep interval, range = 0 (off) to 255 in steps of 5
 #define STRENGTH_CHECK_TIME   1500  // Not used
 #define RDS_CHECK_TIME         250  // Increased from 90
 #define CLICK_TIME              50
@@ -84,7 +85,7 @@ bool screen_toggle = false;             // Toggle when drawsprite is called
 
 // Menu options
 uint16_t currentBrt = 128;              // Display brightness, range = 32 to 255 in steps of 32
-uint16_t currentSleep = 30;             // Display sleep timeout, range = 0 to 255 in steps of 5
+uint16_t currentSleep = DEFAULT_SLEEP;  // Display sleep timeout, range = 0 to 255 in steps of 5
 long elapsedSleep = millis();           // Display sleep timer
 
 // Background screen refresh
@@ -276,7 +277,7 @@ void useBand(const Band *band)
   currentMode = band->bandMode;
   currentBFO = 0;
 
-  if(currentMode==FM)
+  if(band->bandMode==FM)
   {
     // rx.setTuneFrequencyAntennaCapacitor(0);
     rx.setFM(band->minimumFreq, band->maximumFreq, band->currentFreq, getCurrentStep()->step);
@@ -292,7 +293,13 @@ void useBand(const Band *band)
     // Set the tuning capacitor for SW or MW/LW
     // rx.setTuneFrequencyAntennaCapacitor((band[bandIdx].bandType == MW_BAND_TYPE || band[bandIdx].bandType == LW_BAND_TYPE) ? 0 : 1);
 
-    if(isSSB())
+    if(band->bandMode==AM)
+    {
+      // Setting step to 1kHz
+      int step = band->currentStepIdx>=AmTotalSteps? 1 : getCurrentStep()->step;
+      rx.setAM(band->minimumFreq, band->maximumFreq, band->currentFreq, step);
+    }
+    else
     {
       // Configure SI4732 for SSB (SI4732 step not used, set to 0)
       rx.setSSB(band->minimumFreq, band->maximumFreq, band->currentFreq, 0, currentMode);
@@ -300,12 +307,8 @@ void useBand(const Band *band)
       rx.setSSBAutomaticVolumeControl(1);
       // G8PTN: Commented out
       //rx.setSsbSoftMuteMaxAttenuation(softMuteMaxAttIdx);
-    }
-    else
-    {
-      // Setting step to 1kHz
-      int step = band->currentStepIdx>=AmTotalSteps? 1 : getCurrentStep()->step;
-      rx.setAM(band->minimumFreq, band->maximumFreq, band->currentFreq, step);
+      // To move frequency forward, need to move the BFO backwards
+      rx.setSSBBfo(-(currentBFO + band->bandCal));
     }
 
     // G8PTN: Enable GPIO1 as output
@@ -330,11 +333,11 @@ void useBand(const Band *band)
   rssi = 0;
   snr  = 0;
 
-  // Clear current station name (RDS/CB)
-  clearStationName();
+  // Clear current station info (RDS/CB)
+  clearStationInfo();
 
-  // Check current CB channel
-  checkCbChannel();
+  // Check for named frequencies
+  identifyFrequency(currentFrequency + currentBFO / 1000);
 }
 
 // This function is called by the seek function process.
@@ -553,29 +556,23 @@ bool doPressAndRotate(int8_t dir)
 //
 bool doRotate(int8_t dir)
 {
-  bool needRedraw = false;
-
   //
   // Side bar menus / settings
   //
-  if(doSideBar(currentCmd, encoderCount))
-  {
-    // Side bar changed, need redraw
-    needRedraw = true;
-  }
+  if(doSideBar(currentCmd, encoderCount)) return(true);
 
   //
   // SSB tuning
   //
-  else if(isSSB())
+  if(isSSB())
   {
 #ifdef ENABLE_HOLDOFF
     // Tuning timer to hold off (SSB) display updates
     tuning_flag = true;
     tuning_timer = millis();
 #endif
+
     updateBFO(currentBFO + dir * getSteps(false));
-    needRedraw = true;
   }
 
   //
@@ -596,18 +593,16 @@ bool doRotate(int8_t dir)
 
     // Tune to a new frequency
     updateFrequency(currentFrequency + step * dir);
-
-    // Clear current station name and information
-    clearStationName();
-
-    // Check current CB channel
-    checkCbChannel();
-
-    // Will need a redraw
-    needRedraw = true;
   }
 
-  return(needRedraw);
+  // Clear current station name and information
+  clearStationInfo();
+
+  // Check for named frequencies
+  identifyFrequency(currentFrequency + currentBFO / 1000);
+
+  // Will need a redraw
+  return(true);
 }
 
 //
@@ -770,9 +765,7 @@ void loop()
 #endif
 
   // Run clock
-  if(getCurrentRDSMode()->mode & RDS_CT) {
-    needRedraw |= clockTickTime();
-  }
+  needRedraw |= clockTickTime();
 
 #ifndef DISABLE_REMOTE
   // Periodically print status to serial

@@ -1,10 +1,25 @@
 #include "Common.h"
+#include "Menu.h"
 
 // CB frequency range
 #define MIN_CB_FREQUENCY 26060
 #define MAX_CB_FREQUENCY 29665
 
-const char *cbChannelNumber[] =
+//
+// Named frequencies, sorted by increasing frequency!
+//
+static const NamedFreq namedFrequencies[] =
+{
+  {  1840, "FT8"  }, {  3573, "FT8"  }, {  5357, "FT8"  }, {  7074, "FT8" },
+  {  7165, "SSTV" }, {  7171, "SSTV" }, { 10136, "FT8"  }, { 14074, "FT8" },
+  { 14230, "SSTV" }, { 18100, "FT8"  }, { 21074, "FT8"  }, { 24915, "FT8" },
+  { 27700, "SSTV" }, { 28074, "FT8"  }, { 28680, "SSTV" },
+};
+
+//
+// CB channel mappings
+//
+static const char *cbChannelNumber[] =
 {
   "1",  "2",  "3",  "41",
   "4",  "5",  "6",  "7",  "42",
@@ -19,24 +34,44 @@ const char *cbChannelNumber[] =
   "40",
 };
 
-char bufStationName[50] = "";
-char bufMessage[100]    = "";
+static char bufStationName[50]  = "";
+static char bufStationInfo[100] = "";
+static char bufProgramInfo[100] = "";
+static uint16_t piCode = 0x0000;
 
 const char *getStationName()
 {
 #ifdef THEME_EDITOR
   return("*STATION*");
 #else
-  return(bufStationName);
+  return(getRDSMode() & RDS_PS? bufStationName : "");
 #endif
 }
 
-void clearStationName()
+const char *getStationInfo()
 {
-  bufStationName[0] = '\0';
+  return(getRDSMode() & RDS_RT? bufStationInfo : "");
 }
 
-static bool showRdsStation(const char *stationName)
+const char *getProgramInfo()
+{
+  return(getRDSMode() & RDS_RT? bufProgramInfo : "");
+}
+
+uint16_t getRdsPiCode()
+{
+  return(getRDSMode() & RDS_PI? piCode : 0x0000);
+}
+
+void clearStationInfo()
+{
+  bufStationName[0] = '\0';
+  bufStationInfo[0] = '\0';
+  bufProgramInfo[0] = '\0';
+  piCode = 0x0000;
+}
+
+static bool showStationName(const char *stationName)
 {
   if(stationName && strcmp(bufStationName, stationName))
   {
@@ -47,18 +82,38 @@ static bool showRdsStation(const char *stationName)
   return(false);
 }
 
-#if 0 // Not used yet, enable later
-static bool showRdsMessage(const char *rdsMessage)
+static bool showStationInfo(const char *stationInfo)
 {
-  if(rdsMessage && strcmp(bufMessage, rdsMessage))
+  if(stationInfo && strcmp(bufStationInfo, stationInfo))
   {
-    strcpy(bufMessage, rdsMessage);
+    strcpy(bufStationInfo, stationInfo);
     return(true);
   }
 
   return(false);
 }
-#endif
+
+static bool showProgramInfo(const char *programInfo)
+{
+  if(programInfo && strcmp(bufProgramInfo, programInfo))
+  {
+    strcpy(bufProgramInfo, programInfo);
+    return(true);
+  }
+
+  return(false);
+}
+
+static bool showRdsPiCode(uint16_t rdsPiCode)
+{
+  if(rdsPiCode!=piCode)
+  {
+    piCode = rdsPiCode;
+    return(true);
+  }
+
+  return(false);
+}
 
 static bool showRdsTime(const char *rdsTime)
 {
@@ -87,34 +142,34 @@ static bool showRdsTime(const char *rdsTime)
 bool checkRds()
 {
   bool needRedraw = false;
+  uint8_t mode = getRDSMode();
 
   rx.getRdsStatus();
 
   if(rx.getRdsReceived() && rx.getRdsSync() && rx.getRdsSyncFound())
   {
-
-    needRedraw |= showRdsStation(rx.getRdsText0A());
-//    needRedraw |= showRdsMessage(rx.getRdsText2A());
-    if(getCurrentRDSMode()->mode & RDS_CT) {
-      needRedraw |= showRdsTime(rx.getRdsTime());
-    }
+    needRedraw |= (mode & RDS_PS) && showStationName(rx.getRdsStationName());
+    needRedraw |= (mode & RDS_RT) && showStationInfo(rx.getRdsStationInformation());
+    needRedraw |= (mode & RDS_RT) && showProgramInfo(rx.getRdsProgramInformation());
+    needRedraw |= (mode & RDS_PI) && showRdsPiCode(rx.getRdsPI());
+    needRedraw |= (mode & RDS_CT) && showRdsTime(rx.getRdsTime());
   }
 
   // Return TRUE if any RDS information changes
   return(needRedraw);
 }
 
-bool checkCbChannel()
+static const char *findCBChannelByFreq(uint16_t freq)
 {
   const int column_step = 450; // In kHz
   const int row_step    = 10;
   const int max_columns = 8;   // A-H
   const int max_rows    = 45;
+  static char buf[50];
 
-  if(currentFrequency<MIN_CB_FREQUENCY || currentFrequency>MAX_CB_FREQUENCY)
-    return(showRdsStation(""));
+  if(freq<MIN_CB_FREQUENCY || freq>MAX_CB_FREQUENCY) return(0);
 
-  int offset = currentFrequency - MIN_CB_FREQUENCY;
+  int offset = freq - MIN_CB_FREQUENCY;
   char type  = 'R';
   if((offset%10) == 5)
   {
@@ -124,14 +179,40 @@ bool checkCbChannel()
 
   int column_index = offset / column_step;
   int remainder    = offset % column_step;
-  if((column_index>=max_columns) || (remainder%row_step))
-    return(showRdsStation(""));
+  if((column_index>=max_columns) || (remainder%row_step)) return(0);
 
   int row_number = remainder / row_step;
-  if((row_number>=max_rows) || (row_number<0))
-    return(showRdsStation(""));
+  if((row_number>=max_rows) || (row_number<0)) return(0);
 
-  char buf[50];
   sprintf(buf, "%c%s%c", 'A' + column_index, cbChannelNumber[row_number], type);
-  return(showRdsStation(buf));
+  return(buf);
+}
+
+static const char *findNameByFreq(uint16_t freq, const NamedFreq *db, uint16_t dbSize)
+{
+  int r, l;
+
+  for(l=0, r=dbSize-1 ; l <= r ; )
+  {
+    int m = (l + r) >> 1;
+    if(db[m].freq < freq)      l = m + 1;
+    else if(db[m].freq > freq) r = m - 1;
+    else return(db[m].name);
+  }
+
+  return(0);
+}
+
+bool identifyFrequency(uint16_t freq)
+{
+  const char *name;
+
+  // Try list of named frequencies first
+  name = findNameByFreq(freq, namedFrequencies, ITEM_COUNT(namedFrequencies));
+
+  // Try CB channel names
+  name = name? name : findCBChannelByFreq(freq);
+
+  // Done
+  return(showStationName(name? name : ""));
 }

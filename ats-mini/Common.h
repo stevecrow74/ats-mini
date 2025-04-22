@@ -5,7 +5,7 @@
 #include <TFT_eSPI.h>
 #include <SI4735.h>
 
-#define APP_VERSION    210  // FIRMWARE VERSION
+#define APP_VERSION    211  // FIRMWARE VERSION
 #define EEPROM_VERSION 69   // EEPROM VERSION (forces reset)
 
 // Modes
@@ -15,8 +15,10 @@
 #define AM            3
 
 // RDS Modes
-#define RDS_PS        0b00000001
-#define RDS_CT        0b00000010
+#define RDS_PS        0b00000001  // Station name
+#define RDS_CT        0b00000010  // Time
+#define RDS_PI        0b00000100  // PI code
+#define RDS_RT        0b00001000  // Radio text
 
 // SI4732/5 PINs
 #define PIN_POWER_ON  15            // GPIO15   External LDO regulator enable (1 = Enable)
@@ -62,9 +64,9 @@ typedef struct
 
 typedef struct
 {
-  uint8_t mode;
-  const char *desc;
-} RDSMode;
+  uint16_t freq;          // Frequency
+  const char *name;       // Frequency name
+} NamedFreq;
 
 //
 // Global Variables
@@ -83,7 +85,6 @@ extern uint8_t currentMode;
 extern uint16_t currentCmd;
 extern uint16_t currentBrt;
 extern uint16_t currentSleep;
-extern uint8_t currentRDSMode;
 extern uint8_t AmTotalSteps;
 
 extern int8_t FmAgcIdx;
@@ -93,6 +94,7 @@ extern int8_t AmAvcIdx;
 extern int8_t SsbAvcIdx;
 extern int8_t AmSoftMuteIdx;
 extern int8_t SsbSoftMuteIdx;
+extern uint8_t rdsModeIdx;
 
 extern int8_t agcIdx;
 extern int8_t agcNdx;
@@ -128,13 +130,13 @@ void drawBattery(int x, int y);
 
 // Station.c
 const char *getStationName();
+const char *getStationInfo();
+const char *getProgramInfo();
 const char *getRdsTime();
-void clearStationName();
+uint16_t getRdsPiCode();
+void clearStationInfo();
 bool checkRds();
-bool checkCbChannel();
-
-// Menu.cpp
-const RDSMode *getCurrentRDSMode();
+bool identifyFrequency(uint16_t freq);
 
 #ifndef DISABLE_REMOTE
 // Remote.c

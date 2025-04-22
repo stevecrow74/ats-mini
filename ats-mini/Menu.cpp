@@ -129,20 +129,22 @@ const char *settings[] =
 
 const char *bandModeDesc[] = { "FM", "LSB", "USB", "AM" };
 
+//
 // RDS Menu
 //
 
-uint8_t currentRDSMode = 0;
-
+uint8_t rdsModeIdx = 0;
 RDSMode rdsMode[] =
 {
   { RDS_PS, "PS"},
   { RDS_PS | RDS_CT, "PS+CT" },
-  // PS+PI PS+RT PS+PI+RT ... ALL
+//  { RDS_PS | RDS_PI, "PS+PI" },
+//  { RDS_PS | RDS_PI | RDS_CT, "PS+PI+CT" },
+//  { RDS_PS | RDS_PI | RDS_RT, "PS+PI+RT" },
+//  { RDS_PS | RDS_PI | RDS_RT | RDS_CT, "ALL" },
 };
 
-int getTotalRDSModes() { return(ITEM_COUNT(rdsMode)); }
-const RDSMode *getCurrentRDSMode() { return(&rdsMode[currentRDSMode]); }
+uint8_t getRDSMode() { return(rdsMode[rdsModeIdx].mode); }
 
 //
 // Step Menu
@@ -274,12 +276,12 @@ Bandwidth bandwidthFM[] =
 
 const Bandwidth *getCurrentBandwidth()
 {
-  if (isSSB())
-    return &bandwidthSSB[bwIdxSSB];
-  else if (currentMode == FM)
-    return &bandwidthFM[bwIdxFM];
+  if(isSSB())
+    return(&bandwidthSSB[bwIdxSSB]);
+  else if(currentMode == FM)
+    return(&bandwidthFM[bwIdxFM]);
   else
-    return &bandwidthAM[bwIdxAM];
+    return(&bandwidthAM[bwIdxAM]);
 }
 
 
@@ -434,8 +436,8 @@ static void doSleep(int dir)
 
 static void doRDSMode(int dir)
 {
-  currentRDSMode = wrap_range(currentRDSMode, dir, 0, getTotalRDSModes() - 1);
-  if(~getCurrentRDSMode()->mode & RDS_CT) clockReset();
+  rdsModeIdx = wrap_range(rdsModeIdx, dir, 0, LAST_ITEM(rdsMode));
+  if(!(getRDSMode() & RDS_CT)) clockReset();
 }
 
 void doStep(int dir)
@@ -836,7 +838,7 @@ static void drawRDSMode(int x, int y, int sx)
 {
   drawCommon(settings[MENU_RDS], x, y, sx);
 
-  int count = getTotalRDSModes();
+  int count = ITEM_COUNT(rdsMode);
   for(int i=-2 ; i<3 ; i++)
   {
     if(i==0)
@@ -844,7 +846,7 @@ static void drawRDSMode(int x, int y, int sx)
     else
       spr.setTextColor(TH.menu_item, TH.menu_bg);
 
-    spr.drawString(rdsMode[abs((currentRDSMode+count+i)%count)].desc, 40+x+(sx/2), 64+y+(i*16), 2);
+    spr.drawString(rdsMode[abs((rdsModeIdx+count+i)%count)].desc, 40+x+(sx/2), 64+y+(i*16), 2);
   }
 }
 
@@ -987,6 +989,7 @@ static void drawInfo(int x, int y, int sx)
     //spr.setTextDatum(MR_DATUM);
     spr.setTextColor(TH.box_off_text, TH.box_off_bg);
     spr.drawString("Muted", 48+x, 64+y+(1*16), 2);
+    spr.setTextColor(TH.box_text, TH.box_bg);
   }
   else
   {
@@ -995,12 +998,10 @@ static void drawInfo(int x, int y, int sx)
   }
 
   // Draw current time
-  if(getCurrentRDSMode()->mode & RDS_CT) {
-    const char *time = clockGet();
-    if (time) {
-      spr.drawString("Time:", 6+x, 64+y+(2*16), 2);
-      spr.drawString(time, 48+x, 64+y+(2*16), 2);
-    }
+  if((getRDSMode() & RDS_CT) && clockGet())
+  {
+    spr.drawString("Time:", 6+x, 64+y+(2*16), 2);
+    spr.drawString(clockGet(), 48+x, 64+y+(2*16), 2);
   }
 }
 
