@@ -20,9 +20,9 @@ Check out the [Releases](https://github.com/esp32-si4732/ats-mini/releases) page
 
 The hardware, software and flashing documentation is available at <https://esp32-si4732.github.io/ats-mini/>
 
-## This Release
+## My Release
 
-In this release I have edited the bands to include all frequencies from 150Hz to 30Mhz.
+In my release I have edited the bands to include all frequencies from 150Hz to 30Mhz.
 
 below is the bands and frequencies they cover.
 
