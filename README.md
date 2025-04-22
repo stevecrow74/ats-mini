@@ -24,6 +24,8 @@ The hardware, software and flashing documentation is available at <https://esp32
 
 In my release I have edited the bands to include all frequencies from 150Hz to 30Mhz.
 
+I'm also going to slowly add station names to broadcast bands, that will appear where the RDS station name appears for non-VHF FM stations. 
+
 below is the bands and frequencies they cover.
 
 <code>
