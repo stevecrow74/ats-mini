@@ -25,7 +25,7 @@ The hardware, software and flashing documentation is available at <https://esp32
 In this release I have edited the bands to include all frequencies from 150Hz to 30Mhz.
 
 below is the bands and frequencies they cover.
-band         Modulation         frequency range
+<code>band         Modulation         frequency range
 VHF          FM,               6400, 10800, 
 LW           AM,                150,   283, 
 MW1          AM,                283,  1800, 
@@ -68,4 +68,4 @@ SW10         AM,              21900, 24800,
 SW11         AM,              25000, 25600, 
 11B          AM,              25600, 26100, 
 CB           AM,              26100, 28000, 
-10M          USB,             28000, 30000, 
+10M          USB,             28000, 30000, </code>
