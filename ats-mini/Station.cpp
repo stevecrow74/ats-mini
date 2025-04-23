@@ -11,12 +11,22 @@
 static const NamedFreq namedFrequencies[] =
 {
   {  1089, "TalkSport"  }, {  2616, "WeFax"  }, {  3050, "Weather"  }, {  3105, "Weather" },
-  {  3413, "Weather" }, {  4608, "WeFax" }, {  5450, "Weather" }, {  5505, "Weather" },
-  {  7878, "WeFax" }, {  8040, "WeFax" }, {  8957, "Weather" }, {  10051, "Weather" },
-  {  7165, "SSTV" }, {  7171, "SSTV" }, { 11083, "WeFax"  }, { 14074, "FT8" },
-  { 14230, "SSTV" }, { 18100, "FT8"  }, { 21074, "FT8"  },   { 24915, "FT8" },
+  {  3413, "Weather" }, {  3955,  "KBS World"  }, {  4608, "WeFax" }, {  5450, "Weather" },
+  {  5505, "Weather" },  {  6090,  "Radio Amhara"  }, {  7165, "SSTV" }, {  7171, "SSTV" },
+  {  7245,  "China R INT"  }, {  7305,  "China R INT"  }, {  7325,  "Voice of America"  },
+  {  7390,  "China R INT"  }, {  7415,  "China R INT"  }, {  7878, "WeFax" }, {  8040, "WeFax" },
+  {  8957, "Weather" }, {  9440,  "China R INT"  }, {  9460,  "Voice of Turkey"  },
+  {  9585,  "China R INT"  }, {  9600,  "China R INT"  }, {  9620,  "All India Radio"  },
+  {  9645,  "China R INT"  }, {  9745,  "China R INT"  }, {  9790,  "R France INT"  },
+  {  9865,  "China R INT"  }, {  10051, "Weather" }, { 11083, "WeFax"  }, {  11975,  "R Romania INT"  },
+  {  13670,  "China R INT"  }, { 14230, "SSTV" }, {  15500,  "KSDA"  }, {  17580,  "R Romania INT"  },
   { 27700, "SSTV" }, { 28074, "FT8"  }, { 28680, "SSTV" },
+  // Place Holders for future stations
+  {  156,  "g"  }, {  1,  "A"  }, {  1,  "A"  }, {  1,  "A"  },
+  {  150,  "a"  }, {  151,  "b"  }, {  152,  "c"  }, {  153,  "d"  }, {  154,  "e"  }, {  155,  "f"  }, 
+  {  157,  "h"  }, {  158,  "i"  }, {  159,  "j"  }, {  160,  "k"  }, {  161,  "l"  }, {  162,  "m"  },
 };
+
 
 //
 // CB channel mappings
