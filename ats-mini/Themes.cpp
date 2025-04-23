@@ -367,12 +367,12 @@ const ColorTheme theme[] =
     0x07E0, // smeter_bar
     0xF800, // smeter_bar_plus
     0xF800, // save_icon
-    0xD69A, // batt_voltage
-    0xD69A, // batt_border
-    0x07E0, // batt_full
-    0xF800, // batt_low
-    0x001F, // batt_charge
-    0xFFE0, // batt_icon
+    0x7789, // batt_voltage
+    0x0000, // batt_border
+    0xF3A6, // batt_full
+    0xF801, // batt_low
+    0x0000, // batt_charge
+    0xFFFF, // batt_icon
     0xD69A, // band_text
     0xD69A, // mode_text
     0xD69A, // mode_border
