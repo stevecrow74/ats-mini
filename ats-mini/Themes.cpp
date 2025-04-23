@@ -96,7 +96,7 @@ const ColorTheme theme[] =
     0xE68A, // save_icon
     0x7789, // batt_voltage
     0x0000, // batt_border
-    0x07E0, // batt_full
+    0x6F08, // batt_full
     0xF801, // batt_low
     0x0000, // batt_charge
     0xFFFF, // batt_icon
@@ -369,7 +369,7 @@ const ColorTheme theme[] =
     0xF800, // save_icon
     0x7789, // batt_voltage
     0x0000, // batt_border
-    0xF3A6, // batt_full
+    0x07E0, // batt_full
     0xF801, // batt_low
     0x0000, // batt_charge
     0xFFFF, // batt_icon
