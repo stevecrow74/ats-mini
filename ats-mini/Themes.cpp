@@ -84,7 +84,7 @@ const ColorTheme theme[] =
     0xDEFA, // scale_text
     0xFDE8, // scale_pointer
     0xFDE8, // scale_line
-  }
+  },
 
 {
     "Winamp",
