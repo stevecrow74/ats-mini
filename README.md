@@ -20,7 +20,7 @@ Check out the [Releases](https://github.com/esp32-si4732/ats-mini/releases) page
 
 The hardware, software and flashing documentation is available at <https://esp32-si4732.github.io/ats-mini/>
 
-## My Release
+## Stevecrow74 Release
 
 In my release I have edited the bands to include all frequencies from 150Hz to 30Mhz.
 
@@ -73,4 +73,38 @@ SW11         AM,              25000, 25600,
 11B          AM,              25600, 26100,
 CB           AM,              26100, 28000,
 10M          USB,             28000, 30000,
+</code>
+
+## Stations
+
+Here's a current list of stations.
+<code>
+frequency        Station Name
+1089,            "TalkSport"
+2616,            "WeFax"
+3050,            "Weather"
+3105,            "Weather"
+3413,            "Weather"
+3955,            "KBS World"
+4608,            "WeFax"
+5450,            "Weather"
+5505,            "Weather"
+6090,            "Radio Amhara"
+7165,            "SSTV"
+7171,            "SSTV"
+7245,            "China R INT"
+7305,            "China R INT"
+7325,            "Voice of America"
+7390,            "China R INT"
+7415,            "China R INT"
+7878,            "WeFax"
+8040,            "WeFax"
+11083,           "WeFax"
+11975,           "R Romania INT"
+13670,           "China R INT"
+14230,           "SSTV"
+15500,           "KSDA"
+17580,           "R Romania INT"
+27700,           "SSTV"
+28680,           "SSTV"
 </code>
