@@ -15,10 +15,7 @@ static const NamedFreq namedFrequencies[] =
   {  5505, "Weather" },  {  6090,  "Radio Amhara"  }, {  7165, "SSTV" }, {  7171, "SSTV" },
   {  7245,  "China R INT"  }, {  7305,  "China R INT"  }, {  7325,  "Voice of America"  },
   {  7390,  "China R INT"  }, {  7415,  "China R INT"  }, {  7878, "WeFax" }, {  8040, "WeFax" },
-  {  8957, "Weather" }, {  9440,  "China R INT"  }, {  9460,  "Voice of Turkey"  },
-  {  9585,  "China R INT"  }, {  9600,  "China R INT"  }, {  9620,  "All India Radio"  },
-  {  9645,  "China R INT"  }, {  9745,  "China R INT"  }, {  9790,  "R France INT"  },
-  {  9865,  "China R INT"  }, {  10051, "Weather" }, { 11083, "WeFax"  }, {  11975,  "R Romania INT"  },
+  { 11083, "WeFax"  }, {  11975,  "R Romania INT"  },
   {  13670,  "China R INT"  }, { 14230, "SSTV" }, {  15500,  "KSDA"  }, {  17580,  "R Romania INT"  },
   { 27700, "SSTV" }, { 28074, "FT8"  }, { 28680, "SSTV" },
   // Place Holders for future stations
