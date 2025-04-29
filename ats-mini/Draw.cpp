@@ -39,7 +39,7 @@ static void drawAbout()
   spr.drawString("Authors: PU2CLR (Ricardo Caratti),", 2, 70, 2);
   spr.drawString("Volos Projects, Ralph Xavier, Sunnygold,", 2, 70 + 16, 2);
   spr.drawString("Goshante, G8PTN (Dave), R9UCL (Max Arnold),", 2, 70 + 16 * 2, 2);
-  spr.drawString("Marat Fayzullin", 2, 70 + 16 * 3, 2);
+  spr.drawString("Marat Fayzullin, Stevecrow74", 2, 70 + 16 * 3, 2);
 
   char text[64];
   sprintf(text, "DID: %08lX  DST: %02X%08lX",
