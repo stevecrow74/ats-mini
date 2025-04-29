@@ -550,6 +550,84 @@ void getColorTheme()
 
 #endif // THEME_EDITOR
 
+{
+    "Modern",
+    0x2A2C, // bg
+    0xDEFA, // text
+    0xDEFA, // text_muted
+    0xFA86, // text_warn
+    0xFDC8, // smeter_icon
+    0xFBC8, // smeter_bar
+    0xFDC8, // smeter_bar_plus
+    0x4535, // save_icon
+    0xFDE8, // batt_voltage
+    0x0000, // batt_border
+    0xFBC8, // batt_full
+    0x8C51, // batt_low
+    0x758F, // batt_charge
+    0xFFFF, // batt_icon
+    0xDEFA, // band_text
+    0x4D15, // mode_text
+    0x0000, // mode_border
+    0x2A2C, // box_bg
+    0x2A2C, // box_border
+    0xDEFA, // box_text
+    0x2A2C, // box_off_bg
+    0xDEFA, // box_off_text
+    0x2A2C, // menu_bg
+    0x2A2C, // menu_border
+    0xFDE8, // menu_hdr
+    0x4D15, // menu_item
+    0x2A2C, // menu_hl_bg
+    0xFBC8, // menu_hl_text
+    0xDEFA, // menu_param
+    0xFDE8, // freq_text
+    0xDEFA, // funit_text
+    0x758F, // rds_text
+    0xDEFA, // scale_text
+    0xFDE8, // scale_pointer
+    0xFDE8, // scale_line
+  },
+
+{
+    "Winamp",
+    0x2927, // bg
+    0x6EA9, // text
+    0x7BEF, // text_muted
+    0xE68A, // text_warn
+    0xE68A, // smeter_icon
+    0xF3A6, // smeter_bar
+    0xFA80, // smeter_bar_plus
+    0xE68A, // save_icon
+    0x7789, // batt_voltage
+    0x0000, // batt_border
+    0x6F08, // batt_full
+    0xF801, // batt_low
+    0x0000, // batt_charge
+    0xFFFF, // batt_icon
+    0x7789, // band_text
+    0x7789, // mode_text
+    0x73D2, // mode_border
+    0x2927, // box_bg
+    0x2927, // box_border
+    0xFFFF, // box_text
+    0x2927, // box_off_bg
+    0xFFFF, // box_off_text
+    0x2927, // menu_bg
+    0x2927, // menu_border
+    0xE68A, // menu_hdr
+    0xFFFF, // menu_item
+    0x2927, // menu_hl_bg
+    0xF3A6, // menu_hl_text
+    0x7789, // menu_param
+    0xFF23, // freq_text
+    0x6F08, // funit_text
+    0x6F08, // rds_text
+    0xD6DB, // scale_text
+    0xBAE5, // scale_pointer
+    0xDE6A, // scale_line
+  },
+
   {
     "Bluesky",
     0x2293, // bg
